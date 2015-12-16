@@ -1,0 +1,64 @@
+<% posts.forEach(function (post, index) { %>
+<p><h2><a href="#"><%= post.title %></a></h2></p>
+<p class="info">
+    作者：<a href="#"><%= post.name %></a> |
+    日期：<%= post.time.minute %>
+</p>
+<p><%- post.post %></p>
+<% }) %>
+
+
+// models/user.js
+
+function User(user) {
+    this.name = name;
+    this.password = password;
+    this.email = email;
+}
+
+User.prototype.save = function(callback) {
+    var md5 = crypto.createHash('md5');
+    var email_MD5 = md5.update(this.email.toLowerCase()).digest('hex');
+
+    var user = {
+        name : this.name,
+        password : this.password,
+        email: this.email
+    };
+
+    var newUser = new UserModel(user);
+    newUser.save(function (err, user) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, user);
+    });
+};
+
+User.get = function (name, callback) {
+    User.findOne({name: name}, function (err, user) {
+        if(err) {
+            return callback(err);
+        }
+        callback(null, user);
+    });
+};
+
+
+<% posts.forEach(function (post, index) { %>
+<p><h2><a href="#"><%= post.title %></a></h2></p>
+<p class="info">
+    作者：<a href="#"><%= post.name %></a> |
+    日期：<%= post.time.minute %>
+</p>
+<p><%- post.post %></p>
+<% }) %>
+
+
+//  comments.js
+<br />
+<% post.comments.forEach(function (comment, index) { %>
+<p><a href="<%= comment.website %>"><%= comment.name %></a>
+    <span class="info"> 回复于 <%= comment.time %></span></p>
+<p><%- comment.content %></p>
+<% }) %>
